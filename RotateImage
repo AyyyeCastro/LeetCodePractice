@@ -1,0 +1,24 @@
+# You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+
+# You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+
+class Solution(object):
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+       
+        matrixSize = len(matrix) #get the size of the matrix
+        
+        for row in range(matrixSize): #for the rows in the matrix
+            for col in range(row + 1, matrixSize):  # +1 set it to the next row, and not iself.
+                matrix[row][col], matrix[col][row] = matrix[col][row], matrix[row][col]
+                # swap their values
+
+        # Reverse rows to be in correct order.
+        for row in matrix:
+            row.reverse()
+                
+        
+        
