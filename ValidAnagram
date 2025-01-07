@@ -1,0 +1,33 @@
+Given two strings s and t, return true if t is an 
+anagram of s, and false otherwise.
+
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        
+        sCounter = {}
+        tCounter = {}
+        
+        for char in s:
+            if char in sCounter:
+                sCounter[char] += 1
+            else:
+                sCounter[char] = 1
+        for char in t:
+            if char in tCounter:
+                tCounter[char] += 1
+            else:
+                tCounter[char] = 1      
+                
+        if sCounter == tCounter:
+            return True
+        else: 
+            return False
+                
+                
+        
+        
