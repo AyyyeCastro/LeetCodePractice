@@ -1,0 +1,25 @@
+# Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+
+class Solution(object):
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        
+        # k is pre-defined in the function by leetcode. print(k)
+        n = k % len(nums)  # modulo (remainder) not division. Ensures no matter how large k gets, it can rotate to the intended position.
+        nums[:] = nums[-n:] + nums[:-n]  # Rotate in-place
+        
+        #nums[-n:] extracts the last k elements of the list.
+        #nums[:-n] extracts all elements except the last n elements.
+        #nums[:] = nums[-n:] + nums[:-n] -- concacatentes the two lists together to rotate in place.
+        
+        return nums
+            
+            
+            
+        
+     
+        
