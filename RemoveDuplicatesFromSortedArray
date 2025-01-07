@@ -1,0 +1,30 @@
+# Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+
+# Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
+
+# Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
+# Return k.        
+
+# Handle a list that is empty/null
+        if not nums:
+            return 0
+        #output nums so I know what I am working with. 
+        else:
+            print(nums)
+
+        #Sorting algorithim
+        i = 0  #initialize i; this will represent our index placement starting at 0.
+        while i < len(nums): # iterate through the nums array starting at index i (0);
+            j = i + 1 # compare to the index in the array after the one currently on. (not to itself).
+            while j < len(nums): #this is how it checks over each index in the array, not just one after.
+                if nums[i] == nums[j]: #if the value of index at i == j, then ->
+                    del nums[j]  # Remove the duplicate at the j index.
+                else:
+                    j += 1  # Move to the next element, and keep checking.
+            i += 1
+        print(nums) 
+        
+        # initial k for the return. 
+        k = len(nums) # the nums array has been cleaned. Len the array size of nums to k. 
+        
+        return k;
