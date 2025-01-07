@@ -1,0 +1,35 @@
+Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Note that you must do this in-place without making a copy of the array.
+
+
+
+class Solution(object):
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        
+        #initiate counters
+        countZeros = 0 
+        i = 0 
+        
+        #while the counter is the size of the array index
+        while i < len(nums):
+            if nums[i] == 0: # if the current index == 0
+                countZeros += 1  #count the appearance of it.
+                nums.pop(i)  # Remove that zero we just counted. 
+            else:
+                i += 1   # keep track of the counter.
+                
+  
+        for i in range(countZeros):  # for the amount of zeros counted, append it to the nums array.
+            nums.append(0)
+    
+        return nums 
+        
+        
+        
+
+          
