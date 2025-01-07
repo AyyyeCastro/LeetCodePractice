@@ -1,0 +1,139 @@
+Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.
+
+The algorithm for myAtoi(string s) is as follows:
+
+Whitespace: Ignore any leading whitespace (" ").
+Signedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.
+Conversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.
+Rounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.
+Return the integer as the final result.
+
+
+class Solution(object):
+    def myAtoi(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        # - 1- 
+        # if the string is just spaces, return 0 and end the entire code.else ->
+        # initialize the array and variables to store the sign.
+        # for each character in the string, send it to the array.
+        # if the character is a non-digit (alpha) end the array insertion at that char. Even if it's           # the first one.
+        # Keep white spaces at this step.
+        # keep signs for now, even in non [0] index.
+        # If everything was removed (invalid from the start) -> return 0. 
+        
+        # - 2 - 
+        # If the numArray is empty, return 0 and end code before logic continues.
+        # if the inde spot is a space, pop it from the numArray. UNTIL:
+        # if a non-space is found, don't continue popping blank spaces (' ')
+        # flag nonSpaceCharFound to True. Otherwise, if still False ->
+        # and the current index and the previous index are not valid digits (i.e spaces): continue             # popping. 
+        # If the index counter > 0, the current index is a space, and previous index is a digit, 
+        # then end (delete) the numArray at the digit.
+        # Alternative conditions of similar context in this section.
+        
+        
+        # - 3 -
+        # start i at index 1 not 0, to check for signs after index 0.
+        # if sign is after index[0], then cut the array from prior to that invalid sign.
+        # Next if a sign is at index[0] (valid) then store it into storeSign variable, for later and           # pop it from numArray. if numArray index[0] starts with '.' 
+        # then return 0 (ex. 0.145 is just 0) if it's after index [0] then end it at to the whole.
+        
+        # - 4 - 
+        # Reset the index (i) to zero.
+        # This will remove zeros until it reaches a non-zero number. 
+        # For example (04010 = 4010, because it found 4, it stops the loop there).
+        # If the array now only has 0, or is empty -> return 0 and stop code here.
+        
+        # - 5- 
+        # join all individual indexes from numArray into a solid string.
+        # check if a sign exists, if it does attatch it to the backToString, and convert it to an Int.
+        # Else convert just the backToString to an Int.
+        # If the int is 32 bits, return the int.
+        # Else if it's less, return the lower bound. More? Return the upper bound. 
+        # The problem is not asking for literal rounding.
+        #-----------------------------------
+     
+        #--------------- 1 ------------------
+        if s.isspace():
+            return 0        
+        numArray = []
+        storeSign = ''
+        
+        for char in s:
+            if char.isalpha() and (not char.isdigit() and char != '-' and char != '+' and char != ' '):
+                break;       
+            else:
+                numArray.append(char)    
+        
+        #--------------- 2 ------------------
+        if numArray != []:
+            nonSpaceCharFound = False
+            i = 0
+            while i < len(numArray):
+                if numArray[i] != ' ':
+                    nonSpaceCharFound = True
+                if nonSpaceCharFound == False and numArray[i] == ' ' and not numArray[i-1].isdigit():
+                    numArray.pop(i)
+                    i -= 1
+                if i > 0 and numArray[i] == ' ' and numArray[i-1].isdigit():
+                    del numArray[i:] 
+                else: 
+                    if i > 0 and numArray[i-1].isdigit() and not numArray[i].isdigit():  
+                        del numArray[i:] 
+                        break 
+                    else: 
+                        if i > 0 and not numArray[i-1].isdigit() and not numArray[i].isdigit() and numArray[i-1] != ' ':  
+                            return 0                         
+                    i += 1 
+        else:
+            return 0
+                  
+        #--------------- 3 ------------------
+        if numArray != []:
+            i = 1
+            while i < len(numArray): 
+                if numArray[i] == '+' or numArray[i] == '-' or numArray[i] == '.':
+                    del numArray[:i] 
+                else:
+                    i += 1     
+
+            if numArray[0] == '+' or numArray[0] == '-':
+                storeSign = numArray[0] 
+                numArray.remove(numArray[0])
+        else:
+            return 0
+        
+        if numArray !=[] and numArray[0] == '.':
+                return 0
+        
+        #--------------- 4 ------------------
+        if numArray != []:
+            i = 0
+            while i < len(numArray) and numArray[i] == '0':
+                numArray.pop(i)
+        else:
+            return 0
+    
+        #--------------- 5 ------------------
+        if numArray != []:
+            backToString = ''.join(numArray)
+            
+            if storeSign != '':
+                toInt = int(storeSign + backToString)
+            else:
+                toInt = int(backToString)
+
+
+            if -2**31 <= toInt <= 2**31 - 1:
+                return toInt
+            else:
+                if toInt < -2**31:
+                    return -2**31  
+                else:  
+                    return 2**31 - 1 
+        else:
+            return 0
+            
