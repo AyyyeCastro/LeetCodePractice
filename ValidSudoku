@@ -1,0 +1,51 @@
+Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+Each row must contain the digits 1-9 without repetition.
+Each column must contain the digits 1-9 without repetition.
+Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+Note:
+
+A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+Only the filled cells need to be validated according to the mentioned rules.
+
+
+
+class Solution(object):
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        i = 0
+        j = 0
+        boardSize = len(board)
+        blockSize = int(len(board) ** 0.5)
+        # block size is always square root of the board size. So a 9x9 board = 3x3. a 16x16 board is           4x4 blocks.... So on...
+        
+        for row in (board):
+            rowDupe = set()
+            for num in row:
+                if num != '.' and num in rowDupe and not (1 <= num <= 9):
+                    return False  # Duplicate in row and/or not in range of 1-9.
+                rowDupe.add(num) #if its not (yet) a duplicate, add it to the set for future checking. 
+       
+        for col in range(boardSize):
+            colDupe = set()
+            for row in range(boardSize):
+                num = board[row][col]
+                if num != '.' and num in colDupe:
+                    return False
+                colDupe.add(num)
+                
+        for blockRow in range(0, boardSize, blockSize):  # Step by blockSize
+            for blockCol in range(0, boardSize, blockSize):
+                blockDupe = set()
+                for row in range(blockRow, blockRow + blockSize):
+                    for col in range(blockCol, blockCol + blockSize):
+                        num = board[row][col]
+                        if num != '.' and num in blockDupe:
+                            return False
+                        blockDupe.add(num) 
+        return True
+        
+        
