@@ -1,0 +1,14 @@
+Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        storeNums = set() #initialize an empty set. Sets, unlike arrays cant have dups or indexes.
+        for index in nums:  # loop over each index in nums
+            if index in storeNums:  # Check if the current number is already in the set
+                return True  # dupe is True. So end the algorithim here. 
+            storeNums.add(index)  # If not, add the current number to the set, to keep comparing.
+        return False 
