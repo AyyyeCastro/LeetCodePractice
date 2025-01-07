@@ -1,0 +1,19 @@
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+
+        needleInHaystack = False
+        locatedIndexAt = 0
+        
+        if needle in haystack:
+            needInHayStack = True
+            if needInHayStack == True:
+                locatedIndexAt = haystack.index(needle)
+                return locatedIndexAt
+        else:
+            return -1
+            
